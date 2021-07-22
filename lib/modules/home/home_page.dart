@@ -17,8 +17,8 @@ class _MyHomePageState extends State<MyHomePage> {
   ReactionDisposer? disposer;
 
   @override
-  void initState() async {
-    await store.getProduct();
+  void initState() {
+    store.getProduct();
     super.initState();
   }
 
@@ -38,14 +38,24 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: store.productList.length,
         itemBuilder: (BuildContext context, int index) => ListTile(
           title: Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(store.productList[index].id),
-                Text(store.productList[index].title),
-                Text(store.productList[index].description),
-                Text(store.productList[index].price.toString())
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(store.productList[index].id),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(store.productList[index].title),
+                      Text(store.productList[index].description),
+                    ],
+                  ),
+                  Text(store.productList[index].price.toString())
+                ],
+              ),
             ),
           ),
         ),
