@@ -14,13 +14,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final store = ProductStore();
-
   ReactionDisposer? disposer;
 
   @override
   void initState() async {
     await store.getProduct();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    disposer!();
+    super.dispose();
   }
 
   @override
