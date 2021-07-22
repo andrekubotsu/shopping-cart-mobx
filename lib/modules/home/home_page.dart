@@ -37,24 +37,38 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: store.productList.length,
         itemBuilder: (BuildContext context, int index) => ListTile(
-          title: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(store.productList[index].id),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(store.productList[index].title),
-                      Text(store.productList[index].description),
-                    ],
-                  ),
-                  Text(store.productList[index].price.toString())
-                ],
+          title: InkWell(
+            onTap: () {},
+            child: Ink(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade400),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0.2,
+                      blurRadius: 1,
+                      offset: Offset(0, 1),
+                    )
+                  ]),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(store.productList[index].id),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(store.productList[index].title),
+                        Text(store.productList[index].description),
+                      ],
+                    ),
+                    Text(store.productList[index].price.toString())
+                  ],
+                ),
               ),
             ),
           ),
