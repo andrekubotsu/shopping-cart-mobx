@@ -24,6 +24,21 @@ mixin _$CartController on _CartControllerBase, Store {
     });
   }
 
+  final _$cartListAtom = Atom(name: '_CartControllerBase.cartList');
+
+  @override
+  ObservableList<CartModel> get cartList {
+    _$cartListAtom.reportRead();
+    return super.cartList;
+  }
+
+  @override
+  set cartList(ObservableList<CartModel> value) {
+    _$cartListAtom.reportWrite(value, super.cartList, () {
+      super.cartList = value;
+    });
+  }
+
   final _$listLengthAtom = Atom(name: '_CartControllerBase.listLength');
 
   @override
@@ -39,15 +54,74 @@ mixin _$CartController on _CartControllerBase, Store {
     });
   }
 
+  final _$priceSumAtom = Atom(name: '_CartControllerBase.priceSum');
+
+  @override
+  String get priceSum {
+    _$priceSumAtom.reportRead();
+    return super.priceSum;
+  }
+
+  @override
+  set priceSum(String value) {
+    _$priceSumAtom.reportWrite(value, super.priceSum, () {
+      super.priceSum = value;
+    });
+  }
+
   final _$_CartControllerBaseActionController =
       ActionController(name: '_CartControllerBase');
 
   @override
-  void addItem(ProductModel product) {
+  void listSizeAndPriceSum() {
+    final _$actionInfo = _$_CartControllerBaseActionController.startAction(
+        name: '_CartControllerBase.listSizeAndPriceSum');
+    try {
+      return super.listSizeAndPriceSum();
+    } finally {
+      _$_CartControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addItem({required ProductModel product}) {
     final _$actionInfo = _$_CartControllerBaseActionController.startAction(
         name: '_CartControllerBase.addItem');
     try {
-      return super.addItem(product);
+      return super.addItem(product: product);
+    } finally {
+      _$_CartControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeItem({required CartModel cartItem}) {
+    final _$actionInfo = _$_CartControllerBaseActionController.startAction(
+        name: '_CartControllerBase.removeItem');
+    try {
+      return super.removeItem(cartItem: cartItem);
+    } finally {
+      _$_CartControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addItemQuantity({required CartModel cartItem}) {
+    final _$actionInfo = _$_CartControllerBaseActionController.startAction(
+        name: '_CartControllerBase.addItemQuantity');
+    try {
+      return super.addItemQuantity(cartItem: cartItem);
+    } finally {
+      _$_CartControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeItemQuantity({required CartModel cartItem}) {
+    final _$actionInfo = _$_CartControllerBaseActionController.startAction(
+        name: '_CartControllerBase.removeItemQuantity');
+    try {
+      return super.removeItemQuantity(cartItem: cartItem);
     } finally {
       _$_CartControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -57,7 +131,9 @@ mixin _$CartController on _CartControllerBase, Store {
   String toString() {
     return '''
 appStatus: ${appStatus},
-listLength: ${listLength}
+cartList: ${cartList},
+listLength: ${listLength},
+priceSum: ${priceSum}
     ''';
   }
 }

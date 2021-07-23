@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (BuildContext context, int index) => ListTile(
                 title: InkWell(
                   onTap: () {
-                    cartController.addItem(controller.products[index]);
+                    cartController.addItem(product: controller.products[index]);
                   },
                   child: Ink(
                     decoration: BoxDecoration(
