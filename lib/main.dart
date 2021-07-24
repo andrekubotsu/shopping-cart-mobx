@@ -13,8 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Shopping Cart',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        backgroundColor: Color(0xFFF7F7F7),
       ),
       home: MyHomePage(title: 'Mobx Shopping Cart'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

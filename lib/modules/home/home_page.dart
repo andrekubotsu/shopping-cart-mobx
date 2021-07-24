@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:shopping_cart/modules/cart/cart_controller.dart';
 import 'package:shopping_cart/modules/cart/cart_page.dart';
 import 'package:shopping_cart/modules/home/home_controller.dart';
+import 'package:shopping_cart/shared/constants/app_colors.dart';
 import 'package:shopping_cart/shared/utils/extensions.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -36,7 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        elevation: 0,
+        backgroundColor: AppColors.lightGrey,
+        title: Text(
+          widget.title,
+          style: TextStyle(color: AppColors.black),
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -51,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Icon(
                     Icons.shopping_cart,
-                    size: 30,
+                    color: AppColors.black,
+                    size: 32,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
@@ -76,41 +83,60 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CircularProgressIndicator(),
             );
           } else if (controller.appStatus == AppStatus.success) {
-            return ListView.builder(
-              itemCount: controller.products.length,
-              itemBuilder: (BuildContext context, int index) => ListTile(
-                title: InkWell(
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12),
+                itemCount: controller.products.length,
+                itemBuilder: (BuildContext context, int index) => InkWell(
                   onTap: () {
                     cartController.addItem(product: controller.products[index]);
                   },
                   child: Ink(
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey.shade400),
+                        borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 0.2,
-                            blurRadius: 1,
-                            offset: Offset(0, 1),
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 0,
+                            blurRadius: 3,
+                            offset: Offset(0, 2),
                           )
                         ]),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(controller.products[index].id),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(controller.products[index].title),
-                              Text(controller.products[index].description),
-                            ],
+                          CircleAvatar(
+                            backgroundColor: AppColors.lightBlue,
+                            maxRadius: 50,
                           ),
-                          Text(controller.products[index].price.reais())
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            controller.products[index].title,
+                            style: TextStyle(
+                                color: AppColors.darkBlue,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            controller.products[index].price.reais(),
+                            style: TextStyle(
+                                color: AppColors.blue,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
+                          )
                         ],
                       ),
                     ),

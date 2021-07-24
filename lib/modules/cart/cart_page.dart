@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:shopping_cart/shared/constants/app_colors.dart';
 import 'package:shopping_cart/shared/utils/extensions.dart';
 import 'cart_controller.dart';
 
@@ -16,12 +17,12 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Observer(builder: (_) {
-          return Text("Total: ${widget.controller.priceSum}");
-        }),
+        backgroundColor: AppColors.lightGrey,
+        elevation: 0,
+        iconTheme: IconThemeData(color: AppColors.black),
       ),
       body: widget.controller.cartList.isEmpty
-          ? Center(child: Text("OPS! Seu carrinho está vazio"))
+          ? Center(child: Text("Ops! Seu carrinho está vazio"))
           : Observer(
               builder: (_) {
                 return ListView.builder(
@@ -78,6 +79,56 @@ class _CartPageState extends State<CartPage> {
                 );
               },
             ),
+      bottomSheet: Observer(builder: (_) {
+        return Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(60),
+                  topRight: Radius.circular(60),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.4),
+                    spreadRadius: 0,
+                    blurRadius: 3,
+                    offset: Offset(0, -1),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    widget.controller.priceSum,
+                    style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text("Finalizar a compra"),
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
+                        backgroundColor:
+                            MaterialStateProperty.all(AppColors.blue)),
+                  )
+                ],
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }
