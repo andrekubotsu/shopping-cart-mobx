@@ -106,6 +106,17 @@ mixin _$CartController on _CartControllerBase, Store {
   }
 
   @override
+  void clearCart() {
+    final _$actionInfo = _$_CartControllerBaseActionController.startAction(
+        name: '_CartControllerBase.clearCart');
+    try {
+      return super.clearCart();
+    } finally {
+      _$_CartControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addItemQuantity({required CartModel cartItem}) {
     final _$actionInfo = _$_CartControllerBaseActionController.startAction(
         name: '_CartControllerBase.addItemQuantity');

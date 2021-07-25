@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shopping_cart/shared/models/product_model.dart';
@@ -36,3 +39,14 @@ abstract class _HomeControllerBase with Store {
     }
   }
 }
+
+// @action
+// Future getRandomColors() async {
+//   final _random = Random();
+//   return Color.fromARGB(
+//     _random.nextInt(256),
+//     _random.nextInt(256),
+//     _random.nextInt(256),
+//     _random.nextInt(256),
+//   );
+// }

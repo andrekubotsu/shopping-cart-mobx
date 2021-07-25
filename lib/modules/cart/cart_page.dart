@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:shopping_cart/modules/cart/widgets/cart_card.dart';
 import 'package:shopping_cart/shared/constants/app_colors.dart';
 import 'package:shopping_cart/shared/utils/extensions.dart';
 import 'cart_controller.dart';
@@ -17,6 +18,23 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Meu carrinho:",
+              style: TextStyle(color: AppColors.black),
+            ),
+            IconButton(
+                onPressed: () {
+                  widget.controller.clearCart();
+                },
+                icon: Icon(
+                  Icons.remove_shopping_cart,
+                  color: AppColors.black,
+                ))
+          ],
+        ),
         backgroundColor: AppColors.lightGrey,
         elevation: 0,
         iconTheme: IconThemeData(color: AppColors.black),
@@ -25,57 +43,13 @@ class _CartPageState extends State<CartPage> {
           ? Center(child: Text("Ops! Seu carrinho está vazio"))
           : Observer(
               builder: (_) {
-                return ListView.builder(
-                  itemCount: widget.controller.cartList.length,
-                  itemBuilder: (_, index) => Dismissible(
-                    key: Key(widget.controller.cartList[index].id),
-                    onDismissed: (direction) {
-                      widget.controller.removeItem(
-                          cartItem: widget.controller.cartList[index]);
-                    },
-                    background: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            child: Icon(
-                              Icons.delete_sweep,
-                              color: Colors.white,
-                            ),
-                            decoration: BoxDecoration(color: Colors.red),
-                          ),
-                        )
-                      ],
-                    ),
-                    child: Card(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(widget.controller.cartList[index].title),
-                          IconButton(
-                              onPressed: () {
-                                widget.controller.addItemQuantity(
-                                    cartItem:
-                                        widget.controller.cartList[index]);
-                              },
-                              icon: Icon(Icons.add)),
-                          Text(widget.controller.cartList[index].quantity
-                              .toString()),
-                          IconButton(
-                              onPressed: () {
-                                widget.controller.removeItemQuantity(
-                                    cartItem:
-                                        widget.controller.cartList[index]);
-                              },
-                              icon: Icon(Icons.remove)),
-                          Text((widget.controller.cartList[index].price *
-                                  widget.controller.cartList[index].quantity)
-                              .reais()),
-                        ],
-                      ),
-                    ),
-                  ),
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 12.0, left: 12.0, right: 12.0, bottom: 85),
+                  child: ListView.builder(
+                      itemCount: widget.controller.cartList.length,
+                      itemBuilder: (_, index) => CartCartCustomWidget(
+                          controller: widget.controller, index: index)),
                 );
               },
             ),

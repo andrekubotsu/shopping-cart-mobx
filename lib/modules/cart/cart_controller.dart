@@ -68,6 +68,15 @@ abstract class _CartControllerBase with Store {
   }
 
   @action
+  void clearCart() {
+    cartList.clear();
+    if (cartList.isEmpty) {
+      appStatus = AppStatus.empty;
+      listSizeAndPriceSum();
+    }
+  }
+
+  @action
   void addItemQuantity({required CartModel cartItem}) {
     final index = cartList.indexOf(cartItem);
     cartList[index] = cartItem.copyWith(quantity: cartItem.quantity + 1);
